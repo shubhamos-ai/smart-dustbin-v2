@@ -1,0 +1,12 @@
+labels = [
+    "plastic waste",
+    "biodegradable waste",
+    "metal waste",
+    "glass waste",
+    "paper waste",
+    "food waste",
+    "cardboard waste",
+    "organic waste",
+    "electronic waste",
+    "battery waste"
+]

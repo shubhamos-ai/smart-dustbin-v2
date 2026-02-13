@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLogic - ESP32 Configuration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .config-container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .current-ip {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .current-ip label {
+            display: block;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-ip .ip-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #22c55e;
+            font-family: 'Courier New', monospace;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #22c55e;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #64748b;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(34, 197, 94, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #93c5fd;
+        }
+
+        @media (max-width: 640px) {
+            .config-container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="config-container">
+        <div class="header">
+            <h1>⚙️ System Configuration</h1>
+            <p class="subtitle">Manage your IP and Camera settings</p>
+        </div>
+
+        <div class="current-ip">
+            <label>Current Status</label>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span style="color: #94a3b8; font-size: 0.8rem;">IP:</span>
+                    <span class="ip-value" style="font-size: 1.1rem; margin-right: 1.5rem;">{{CURRENT_IP}}</span>
+                </div>
+                <div>
+                    <span style="color: #94a3b8; font-size: 0.8rem;">CAMERA:</span>
+                    <span class="ip-value" style="font-size: 1.1rem; color: #3b82f6;">Index {{CURRENT_CAMERA}}</span>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === '1') {
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                
+                let message = '✓ Settings updated!';
+                if (urlParams.get('ip') && urlParams.get('cam')) message = '✓ IP & Camera updated successfully!';
+                else if (urlParams.get('ip')) message = '✓ ESP32 IP updated successfully!';
+                else if (urlParams.get('cam')) message = '✓ Camera switched successfully!';
+                else if (urlParams.get('cam_err')) {
+                    message = '⚠ IP updated, but failed to switch camera.';
+                    successDiv.style.borderColor = '#ef4444';
+                    successDiv.style.color = '#ef4444';
+                    successDiv.style.background = 'rgba(239, 68, 68, 0.1)';
+                }
+                
+                successDiv.textContent = message;
+                document.querySelector('.current-ip').insertAdjacentElement('afterend', successDiv);
+
+                // Remove parameters from URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        </script>
+
+        <form action="/shubhamos/update" method="POST">
+            <div class="form-group">
+                <label for="ip">ESP32 IP Address</label>
+                <input type="text" id="ip" name="ip" placeholder="192.168.1.100"
+                    pattern="^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                    required value="{{CURRENT_IP}}">
+            </div>
+
+            <div class="form-group">
+                <label for="camera_index">Select Camera</label>
+                <select id="camera_index" name="camera_index" 
+                    style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; outline: none;">
+                    {{CAMERA_OPTIONS}}
+                </select>
+                <style>
+                    select option { background: #1e293b; color: white; }
+                    select:focus { border-color: #22c55e; background: rgba(255, 255, 255, 0.08); }
+                </style>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">💾 Save All Settings</button>
+                <a href="/" class="btn btn-secondary">← Back to Dashboard</a>
+            </div>
+        </form>
+
+        <div class="info-box">
+            <strong>ℹ️ Pro Tip:</strong><br>
+            If the video feed stops working, try switching to a different camera index. 
+            On Linux, typically even indices (0, 2, 4) are actual video feeds, while odd indices (1, 3, 5) are metadata.
+        </div>
+    </div>
+</body>
+</html>

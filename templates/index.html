@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLogic - Smart Waste Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f3a 50%, #0a0f1e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            animation: gradientShift 10s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(34, 197, 94, 0.4);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+            text-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.2);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .video-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .detection-panel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #22c55e;
+        }
+
+        .detection-status {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .detection-status:hover {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: rgba(34, 197, 94, 0.2);
+            transform: scale(1.02);
+        }
+
+        .detection-status.processing {
+            animation: processingPulse 2s ease-in-out infinite;
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        @keyframes processingPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 20px 10px rgba(59, 130, 246, 0);
+            }
+        }
+
+        .status-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .status-value.analyzing {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #3b82f6);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 2s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            animation: badgePop 0.4s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        @keyframes badgePop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .category-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .organic {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .inorganic {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .processing-badge {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            animation: processingBadge 1.5s ease-in-out infinite;
+        }
+
+        @keyframes processingBadge {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .confidence-bar {
+            margin-top: 1rem;
+        }
+
+        .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #10b981, #059669);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+            animation: progressGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes progressGlow {
+
+            0%,
+            100% {
+                background-position: 0% center;
+                box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+            }
+
+            50% {
+                background-position: 100% center;
+                box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+            }
+        }
+
+        /* Floating README button */
+        .readme-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .readme-btn {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: floatButton 3s ease-in-out infinite;
+        }
+
+        @keyframes floatButton {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .readme-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 16px 40px rgba(34, 197, 94, 0.6);
+            animation: none;
+        }
+
+        .readme-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(239, 68, 68, 0.8);
+            transform: rotate(90deg);
+        }
+
+        .modal-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #22c55e;
+        }
+
+        .project-links {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .project-link {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            transform: translateX(5px);
+        }
+
+        .project-link a {
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .project-link p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #22c55e;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover .team-avatar {
+            border-color: #10b981;
+            box-shadow: 0 12px 32px rgba(34, 197, 94, 0.5);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .team-info {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <h1>🌱 EcoLogic</h1>
+            <p class="subtitle">AI-Powered Smart Waste Management System</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="glass-card">
+                <div class="video-container">
+                    <div class="live-badge">
+                        <div class="live-dot"></div>
+                        LIVE
+                    </div>
+                    <img src="/video_feed" alt="Live Camera Feed">
+                </div>
+            </div>
+
+            <div class="glass-card detection-panel">
+                <h2>📊 Detection Status</h2>
+
+                <div class="detection-status">
+                    <div class="status-label">Waste Type</div>
+                    <div class="status-value" id="wasteType">Waiting...</div>
+                </div>
+
+                <div class="detection-status">
+                    <div class="status-label">Category</div>
+                    <div id="categoryBadge"></div>
+                </div>
+
+                <div class="detection-status">
+                    <div class="status-label">Confidence</div>
+                    <div class="confidence-bar">
+                        <div class="confidence-label">
+                            <span>Accuracy</span>
+                            <span id="confidenceValue">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating README button -->
+    <div class="readme-float">
+        <button class="readme-btn" onclick="openModal()">
+            📖 README
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="readmeModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+
+            <h2>📖 EcoLogic Project</h2>
+            <p style="color: #94a3b8; margin-bottom: 2rem;">
+                An intelligent waste management system using AI for real-time waste classification and automated
+                sorting.
+            </p>
+
+            <h3>🔗 Project Components</h3>
+            <div class="project-links">
+                <div class="project-link">
+                    <a href="https://github.com/shubhamos-ai/expression-tracking" target="_blank">
+                        Expression Tracking Module
+                    </a>
+                    <p>Real-time object tracking and motion detection system</p>
+                </div>
+                <div class="project-link">
+                    <a href="https://github.com/shubhamos-ai/smart-dustbin" target="_blank">
+                        Smart Dustbin Integration
+                    </a>
+                    <p>ESP32-based hardware integration for automated waste sorting</p>
+                </div>
+                <div class="project-link">
+                    <a href="https://github.com/shubhamos-ai/shubhamos-ai" target="_blank">
+                        Object Detection AI
+                    </a>
+                    <p>CLIP-based waste classification and detection model</p>
+                </div>
+                <div class="project-link">
+                    <a href="https://encryption-3qxz.onrender.com/" target="_blank">
+                        Secure Encryption Service
+                    </a>
+                    <p>End-to-end encryption for secure data transmission</p>
+                </div>
+            </div>
+
+            <h3>👥 Development Team</h3>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-avatar">
+                        <img src="/author/shubham.png" alt="Shubham">
+                    </div>
+                    <div class="team-name">Shubham</div>
+                    <div class="team-info">
+                        SEM-2<br>
+                        BTech-IT<br>
+                        MBIT
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">
+                        <img src="/author/jaydeep.png" alt="Jaydeep">
+                    </div>
+                    <div class="team-name">Jaydeep</div>
+                    <div class="team-info">
+                        SEM-4<br>
+                        BTech-CS<br>
+                        MBIT
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">
+                        <img src="/author/krish.png" alt="Krish">
+                    </div>
+                    <div class="team-name">Krish</div>
+                    <div class="team-info">
+                        SEM-4<br>
+                        BTech-CS<br>
+                        MBIT
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="team-avatar">
+                        <img src="/author/denil.png" alt="Denil">
+                    </div>
+                    <div class="team-name">Denil</div>
+                    <div class="team-info">
+                        SEM-2<br>
+                        BTech-IT<br>
+                        MBIT
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Update detection status
+        async function updateStatus() {
+            try {
+                const response = await fetch('/detection_status');
+                const data = await response.json();
+
+                const wasteTypeEl = document.getElementById('wasteType');
+                const categoryBadgeEl = document.getElementById('categoryBadge');
+                const detectionCards = document.querySelectorAll('.detection-status');
+
+                // Update waste type with animation for processing state
+                wasteTypeEl.textContent = data.type;
+                if (data.category === 'PROCESSING') {
+                    wasteTypeEl.classList.add('analyzing');
+                    detectionCards.forEach(card => card.classList.add('processing'));
+                } else {
+                    wasteTypeEl.classList.remove('analyzing');
+                    detectionCards.forEach(card => card.classList.remove('processing'));
+                }
+
+                // Update confidence
+                document.getElementById('confidenceValue').textContent = data.confidence + '%';
+                document.getElementById('progressFill').style.width = data.confidence + '%';
+
+                // Update category badge
+                if (data.category === 'ORGANIC') {
+                    categoryBadgeEl.innerHTML = '<span class="category-badge organic">🌿 ORGANIC WASTE</span>';
+                } else if (data.category === 'INORGANIC') {
+                    categoryBadgeEl.innerHTML = '<span class="category-badge inorganic">♻️ INORGANIC WASTE</span>';
+                } else if (data.category === 'PROCESSING') {
+                    categoryBadgeEl.innerHTML = '<span class="category-badge processing-badge">⚡ PROCESSING...</span>';
+                } else {
+                    categoryBadgeEl.innerHTML = '<span class="status-value">—</span>';
+                }
+            } catch (error) {
+                console.error('Error fetching status:', error);
+            }
+        }
+
+        // Update every 1 second
+        setInterval(updateStatus, 1000);
+        updateStatus();
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('readmeModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('readmeModal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('readmeModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

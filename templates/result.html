@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 100px; }
+        .box {
+            padding: 30px;
+            display: inline-block;
+            background: #f4f4f4;
+            border-radius: 10px;
+        }
+        h2 { color: #27ae60; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Detection Result</h1>
+        <h2>{{ prediction }}</h2>
+        <p>Confidence: {{ confidence }}%</p>
+        <br>
+        <a href="/">Analyze Another</a>
+    </div>
+</body>
+</html>
