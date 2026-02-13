@@ -172,7 +172,7 @@ The system uses OpenAI's **CLIP (Contrastive Language-Image Pre-training)** mode
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/ecologic.git
-cd jaydeep
+cd shubhamos
 
 # Create virtual environment
 python -m venv venv
@@ -599,7 +599,7 @@ We welcome contributions! Here's how you can help:
 1. **Fork the Repository**
    ```bash
    git clone https://github.com/yourusername/ecologic.git
-   cd jaydeep
+   cd shubhamos
    ```
 
 2. **Create Feature Branch**
@@ -638,7 +638,7 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ## 👥 Authors & Contributors
 
-- **Jaydeep** - Lead Developer & Creator
+- **SHUBHAM** - Lead Developer & Creator
 - **EcoLogic Team** - Core Contributors
 
 ---
