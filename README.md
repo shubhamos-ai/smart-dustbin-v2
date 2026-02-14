@@ -171,7 +171,7 @@ The system uses OpenAI's **CLIP (Contrastive Language-Image Pre-training)** mode
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ecologic.git
+git clone https://github.com/shubhamos-ai/smart-dustbin-v2.git
 cd shubhamos
 
 # Create virtual environment
@@ -598,7 +598,7 @@ We welcome contributions! Here's how you can help:
 
 1. **Fork the Repository**
    ```bash
-   git clone https://github.com/yourusername/ecologic.git
+   git clone https://github.com/shubhamos-ai/smart-dustbin-v2.git
    cd shubhamos
    ```
 
@@ -645,7 +645,7 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ## 📞 Support & Contact
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ecologic/issues)
+- **Issues**: [GitHub Issues](https://github.com/shubhamos-ai/smart-dustbin-v2/issues)
 - **Email**: support@ecologic.ai
 - **Documentation**: [Full Docs](https://docs.ecologic.ai)
 - **Discord**: [Join Community](https://discord.gg/ecologic)
